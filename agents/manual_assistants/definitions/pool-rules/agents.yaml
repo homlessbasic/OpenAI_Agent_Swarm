@@ -1,0 +1,37 @@
+- name: Boss
+  tools:
+    - assign_task
+  talksTo:
+    - USER
+    - Bob
+    - Linda
+    - Nick
+  initMessage: Design a list of rules for a local swimming pool.
+  instructions: boss_instructions.md
+- name: Bob
+  tools: &workerTools
+    - resolve_task
+    - broadcast
+  talksTo:
+    - Boss
+    - Linda
+    - Nick
+  channels: &workerChannels
+    - Worker
+  instructions: bob_instructions.md
+- name: Linda
+  tools: *workerTools
+  talksTo:
+    - Boss
+    - Bob
+    - Nick
+  channels: *workerChannels
+  instructions: linda_instructions.md
+- name: Nick
+  tools: *workerTools
+  talksTo:
+    - Boss
+    - Bob
+    - Linda
+  channels: *workerChannels
+  instructions: nick_instructions.md

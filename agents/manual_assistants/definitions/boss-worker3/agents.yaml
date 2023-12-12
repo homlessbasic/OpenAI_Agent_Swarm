@@ -1,0 +1,37 @@
+- name: Boss
+  tools:
+    - assign_task
+  talksTo:
+    - USER
+    - Worker 1
+    - Worker 2
+    - Worker 3
+  instructions: boss_instructions.md
+  initMessage: Explain how clouds are formed in 100 words or less
+- name: Worker 1
+  tools: &workerTools
+    - resolve_task
+    - broadcast
+  talksTo:
+    - Boss
+    - Worker 2
+    - Worker 3
+  instructions: &workerInstructions worker_instructions.md
+  channels: &workerChannels
+    - Worker
+- name: Worker 2
+  tools: *workerTools
+  talksTo:
+    - Boss
+    - Worker 1
+    - Worker 3
+  instructions: *workerInstructions
+  channels: *workerChannels
+- name: Worker 3
+  tools: *workerTools
+  talksTo:
+    - Boss
+    - Worker 1
+    - Worker 2
+  instructions: *workerInstructions
+  channels: *workerChannels
